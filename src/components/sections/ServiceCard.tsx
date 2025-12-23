@@ -1,32 +1,60 @@
-import React from 'react';
-import * as LucideIcons from 'lucide-react';
 import { Service } from '../../types';
 
 interface ServiceCardProps {
   service: Service;
+  index: number;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
-  const icons = LucideIcons as unknown as Record<string, React.ComponentType<{ size?: number; className?: string }>>;
-  const IconComponent = icons[service.icon] || LucideIcons.Star;
+const accentColors = [
+  { bg: 'bg-brutal-pink', shadow: 'shadow-brutal-pink' },
+  { bg: 'bg-brutal-blue', shadow: 'shadow-brutal-blue' },
+  { bg: 'bg-brutal-yellow', shadow: 'shadow-brutal-yellow' },
+  { bg: 'bg-brutal-green', shadow: 'shadow-brutal-green' },
+];
+
+const icons: Record<string, string> = {
+  'Code2': '💻',
+  'Share2': '📱',
+  'Palette': '🎨',
+  'PenTool': '✏️',
+};
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
+  const colorScheme = accentColors[index % accentColors.length];
 
   return (
-    <div className="group h-full bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-blue-200">
-      <div className="mb-6 inline-flex p-4 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-        <IconComponent size={32} className="text-blue-600" />
+    <div
+      className="group border-4 border-brutal-black rounded-brutal overflow-hidden shadow-brutal hover:translate-x-1 hover:translate-y-1 hover:shadow-brutal-sm transition-all duration-200"
+    >
+      {/* Colored Top Section */}
+      <div className={`${colorScheme.bg} p-6 border-b-4 border-brutal-black`}>
+        <div className="flex items-center justify-between">
+          <span className="text-4xl">{icons[service.icon] || '⚡'}</span>
+          <span className="text-sm font-bold text-brutal-black bg-white/50 px-3 py-1 rounded-full">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+        </div>
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
-      <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+      {/* White Bottom Section */}
+      <div className="bg-white p-6">
+        <h3 className="text-xl font-black text-brutal-black mb-3 group-hover:text-neutral-600 transition-colors">
+          {service.title}
+        </h3>
 
-      <ul className="space-y-3">
-        {service.features.map((feature, index) => (
-          <li key={index} className="flex items-start gap-3">
-            <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
-            <span className="text-gray-700">{feature}</span>
-          </li>
-        ))}
-      </ul>
+        <p className="text-neutral-600 mb-5 leading-relaxed font-medium">
+          {service.description}
+        </p>
+
+        <ul className="space-y-2">
+          {service.features.slice(0, 4).map((feature, idx) => (
+            <li key={idx} className="text-sm text-neutral-700 flex items-center gap-2 font-medium">
+              <span className={`w-2 h-2 ${colorScheme.bg} rounded-full border border-brutal-black`} />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

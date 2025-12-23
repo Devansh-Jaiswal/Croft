@@ -1,17 +1,25 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
 import { Portfolio } from '../../types';
 
 interface PortfolioCardProps {
   item: Portfolio;
   onClick: () => void;
+  index: number;
 }
 
-const PortfolioCard: React.FC<PortfolioCardProps> = ({ item, onClick }) => {
+const categoryColors: Record<string, string> = {
+  'web-development': 'bg-brutal-blue text-white',
+  'social-media': 'bg-brutal-pink',
+  'branding': 'bg-brutal-yellow',
+  'default': 'bg-brutal-green',
+};
+
+const PortfolioCard: React.FC<PortfolioCardProps> = ({ item, onClick, index }) => {
+  const categoryColor = categoryColors[item.category] || categoryColors.default;
+
   return (
     <div
       onClick={onClick}
-      className="group cursor-pointer h-full"
+      className="group cursor-pointer border-4 border-brutal-black rounded-brutal overflow-hidden shadow-brutal bg-white hover:translate-x-1 hover:translate-y-1 hover:shadow-brutal-sm transition-all duration-200"
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -21,38 +29,36 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ item, onClick }) => {
       }}
       aria-label={`View ${item.title} project details`}
     >
-      <div className="relative overflow-hidden rounded-lg h-64 mb-4">
+      {/* Image Section */}
+      <div className="relative overflow-hidden aspect-[4/3] border-b-4 border-brutal-black">
         <img
           src={item.image}
           alt={item.title}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-end p-6">
-          <div className="flex items-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="font-semibold">View Details</span>
-            <ArrowRight size={20} />
-          </div>
+        {/* Index Badge */}
+        <div className="absolute top-4 left-4 bg-white border-3 border-brutal-black rounded-full px-3 py-1 shadow-brutal-sm">
+          <span className="text-sm font-black text-brutal-black">
+            {String(index + 1).padStart(2, '0')}
+          </span>
         </div>
       </div>
 
-      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-        {item.title}
-      </h3>
-      <p className="text-gray-600 text-sm mb-3">{item.client}</p>
-
-      <div className="flex flex-wrap gap-2 mb-4">
-        {item.tags.slice(0, 3).map((tag, index) => (
-          <span
-            key={index}
-            className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
-          >
-            {tag}
+      {/* Content Section */}
+      <div className="p-5">
+        <div className="flex items-center justify-between mb-3">
+          <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded-full border-2 border-brutal-black ${categoryColor}`}>
+            {item.category.replace('-', ' ')}
           </span>
-        ))}
-      </div>
+        </div>
 
-      <p className="text-gray-600 text-sm line-clamp-2">{item.description}</p>
+        <h3 className="text-xl font-black text-brutal-black mb-2 group-hover:text-neutral-600 transition-colors">
+          {item.title}
+        </h3>
+
+        <p className="text-sm font-medium text-neutral-600">{item.client}</p>
+      </div>
     </div>
   );
 };

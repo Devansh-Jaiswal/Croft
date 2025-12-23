@@ -1,7 +1,12 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, Clock, ArrowLeft } from 'lucide-react';
 import { blogPosts } from '../data/blog';
+
+const categoryColors: Record<string, string> = {
+  'development': 'bg-brutal-blue text-white',
+  'marketing': 'bg-brutal-pink',
+  'design': 'bg-brutal-yellow',
+  'strategy': 'bg-brutal-green',
+};
 
 const BlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,17 +14,18 @@ const BlogPost: React.FC = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
+      <div className="min-h-screen bg-brutal-bg pt-32 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Post Not Found</h1>
-          <p className="text-gray-600 mb-8">The article you're looking for doesn't exist.</p>
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-          >
-            <ArrowLeft size={20} />
-            Back to Blog
-          </Link>
+          <div className="brutal-card-static p-12 max-w-md mx-auto">
+            <h1 className="text-4xl font-black text-brutal-black mb-4">Post Not Found</h1>
+            <p className="text-neutral-600 font-medium mb-8">The article you're looking for doesn't exist.</p>
+            <Link
+              to="/blog"
+              className="brutal-button-primary inline-block"
+            >
+              ← Back to Blog
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -30,103 +36,99 @@ const BlogPost: React.FC = () => {
     .slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-white pt-20">
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="min-h-screen bg-brutal-bg pt-32 pb-20">
+      <article className="max-w-4xl mx-auto px-6 lg:px-8">
+        {/* Back Link */}
         <Link
           to="/blog"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold mb-8"
+          className="inline-block bg-white border-3 border-brutal-black rounded-full px-4 py-2 font-bold text-sm text-brutal-black shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all mb-12"
         >
-          <ArrowLeft size={20} />
-          Back to Blog
+          ← Back to Blog
         </Link>
 
+        {/* Header */}
         <header className="mb-12">
           <div className="flex flex-wrap items-center gap-4 mb-6">
-            <span className="px-3 py-1 bg-blue-50 text-blue-600 text-sm font-semibold rounded-full">
+            <span className={`text-sm font-bold uppercase tracking-wide px-4 py-2 rounded-full border-3 border-brutal-black ${categoryColors[post.category] || 'bg-neutral-200'}`}>
               {post.category}
             </span>
-            <div className="flex flex-wrap items-center gap-6 text-gray-600 text-sm">
-              <div className="flex items-center gap-2">
-                <Calendar size={18} />
-                <time dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
-              </div>
-              <div className="flex items-center gap-2">
-                <User size={18} />
-                <span>{post.author}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock size={18} />
-                <span>{post.readTime} min read</span>
-              </div>
-            </div>
+            <span className="text-sm font-bold text-neutral-500">
+              {new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </span>
+            <span className="text-sm font-bold text-neutral-500">
+              {post.readTime} min read
+            </span>
           </div>
 
-          <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-4xl lg:text-5xl font-black text-brutal-black mb-8 leading-tight tracking-tight">
             {post.title}
           </h1>
 
-          <div className="h-96 rounded-lg overflow-hidden shadow-lg mb-8">
+          <div className="border-4 border-brutal-black rounded-brutal overflow-hidden shadow-brutal">
             <img
               src={post.image}
               alt={post.title}
-              className="w-full h-full object-cover"
+              className="w-full aspect-[16/9] object-cover"
             />
           </div>
         </header>
 
-        <div className="prose prose-lg max-w-none mb-12">
+        {/* Content */}
+        <div className="brutal-card-static p-8 md:p-12 mb-12">
           {post.content.split('\n\n').map((paragraph, index) => (
-            <p key={index} className="text-gray-700 leading-relaxed mb-6">
+            <p key={index} className="text-lg text-neutral-700 leading-relaxed mb-6 last:mb-0 font-medium">
               {paragraph}
             </p>
           ))}
         </div>
 
-        <hr className="my-12 border-gray-200" />
-
-        <div className="bg-gray-50 rounded-lg p-8 mb-12">
-          <div className="flex items-start gap-4">
-            <img
-              src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=600&h=600"
-              alt={post.author}
-              className="w-16 h-16 rounded-full object-cover"
-            />
+        {/* Author */}
+        <div className="border-4 border-brutal-black rounded-brutal bg-brutal-yellow shadow-brutal p-6 mb-16">
+          <div className="flex items-center gap-4">
+            <div className="border-3 border-brutal-black rounded-full overflow-hidden shadow-brutal-sm">
+              <img
+                src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=600&h=600"
+                alt={post.author}
+                className="w-16 h-16 object-cover"
+              />
+            </div>
             <div>
-              <h3 className="font-bold text-gray-900 mb-2">About the Author</h3>
-              <p className="text-gray-700">
-                {post.author} is a digital strategist and content creator at CROFT, dedicated to helping businesses grow through strategic digital marketing and web development.
-              </p>
+              <p className="font-black text-brutal-black text-lg">{post.author}</p>
+              <p className="text-brutal-black font-medium">Digital Strategist at CROFT</p>
             </div>
           </div>
         </div>
 
+        {/* Related Posts */}
         {relatedPosts.length > 0 && (
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Articles</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+          <div className="border-t-4 border-brutal-black pt-12">
+            <h2 className="text-2xl font-black text-brutal-black mb-8">
+              Related <span className="highlight-pink">Articles</span>
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
               {relatedPosts.map((relatedPost) => (
                 <Link
                   key={relatedPost.id}
                   to={`/blog/${relatedPost.id}`}
-                  className="group"
+                  className="group border-4 border-brutal-black rounded-brutal bg-white shadow-brutal overflow-hidden hover:translate-x-1 hover:translate-y-1 hover:shadow-brutal-sm transition-all"
                 >
-                  <div className="h-48 rounded-lg overflow-hidden mb-4">
+                  <div className="aspect-[4/3] overflow-hidden border-b-4 border-brutal-black">
                     <img
                       src={relatedPost.image}
                       alt={relatedPost.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {relatedPost.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-2">{relatedPost.readTime} min read</p>
+                  <div className="p-4">
+                    <h3 className="font-black text-brutal-black group-hover:text-neutral-600 transition-colors line-clamp-2">
+                      {relatedPost.title}
+                    </h3>
+                    <p className="text-neutral-500 font-bold text-sm mt-2">{relatedPost.readTime} min read</p>
+                  </div>
                 </Link>
               ))}
             </div>

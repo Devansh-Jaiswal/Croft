@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PortfolioCard from './PortfolioCard';
 import Modal from '../ui/Modal';
 import { portfolioItems } from '../../data/portfolio';
 import { Portfolio } from '../../types';
-import { ChevronRight } from 'lucide-react';
 
 const PortfolioGrid: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Portfolio | null>(null);
   const [filter, setFilter] = useState<string>('all');
 
   const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'web-development', label: 'Web Development' },
-    { id: 'social-media', label: 'Social Media' },
-    { id: 'branding', label: 'Branding' }
+    { id: 'all', label: 'All', color: 'bg-brutal-black text-white' },
+    { id: 'web-development', label: 'Web', color: 'bg-brutal-blue text-white' },
+    { id: 'social-media', label: 'Social', color: 'bg-brutal-pink' },
+    { id: 'branding', label: 'Branding', color: 'bg-brutal-yellow' }
   ];
 
   const filteredProjects = filter === 'all'
@@ -21,45 +20,53 @@ const PortfolioGrid: React.FC = () => {
     : portfolioItems.filter(item => item.category === filter);
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Featured Work
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Explore our latest projects and discover how we deliver exceptional results for our clients.
-          </p>
+    <section id="work" className="py-24 lg:py-32 relative">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 lg:mb-16">
+          <div className="max-w-xl">
+            <span className="brutal-tag-blue mb-6 inline-block">
+              ✦ Portfolio
+            </span>
+            <h2 className="section-title">
+              Selected <span className="highlight-pink">Work</span>
+            </h2>
+          </div>
+
+          {/* Filter Tabs */}
+          <div className="w-full md:w-auto overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+            <div className="flex gap-2 p-2 bg-white border-4 border-brutal-black rounded-brutal shadow-brutal min-w-max">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setFilter(category.id)}
+                  className={`px-5 py-2.5 text-sm font-bold transition-all duration-200 rounded-xl border-2 border-brutal-black whitespace-nowrap ${filter === category.id
+                      ? category.color
+                      : 'bg-white text-brutal-black hover:bg-neutral-100'
+                    }`}
+                  aria-pressed={filter === category.id}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setFilter(category.id)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-                filter === category.id
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600'
-              }`}
-              aria-pressed={filter === category.id}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((item) => (
+        {/* Portfolio Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {filteredProjects.map((item, index) => (
             <PortfolioCard
               key={item.id}
               item={item}
+              index={index}
               onClick={() => setSelectedProject(item)}
             />
           ))}
         </div>
       </div>
 
+      {/* Project Modal */}
       <Modal
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
@@ -67,57 +74,43 @@ const PortfolioGrid: React.FC = () => {
         size="lg"
       >
         {selectedProject && (
-          <div className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
+          <div className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="border-4 border-brutal-black rounded-brutal overflow-hidden shadow-brutal">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full aspect-[4/3] object-cover"
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <span className="brutal-tag mb-4 inline-block">
+                  {selectedProject.client}
+                </span>
+                <h3 className="text-2xl font-black text-brutal-black mb-4">
                   {selectedProject.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{selectedProject.client}</p>
-                <p className="text-gray-700 leading-relaxed mb-6">
+                <p className="text-neutral-600 leading-relaxed mb-6 font-medium">
                   {selectedProject.fullDescription}
                 </p>
-                <div className="flex items-start gap-2 p-4 bg-blue-50 rounded-lg">
-                  <ChevronRight className="text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-semibold text-gray-900">Key Results</p>
-                    <p className="text-gray-700">{selectedProject.results}</p>
-                  </div>
+                <div className="p-4 bg-brutal-green border-4 border-brutal-black rounded-xl">
+                  <p className="text-sm font-black text-brutal-black mb-1">Results</p>
+                  <p className="text-sm font-medium text-brutal-black">{selectedProject.results}</p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 className="text-lg font-bold text-gray-900 mb-4">Gallery</h4>
+              <p className="text-lg font-black text-brutal-black mb-4">Gallery</p>
               <div className="grid grid-cols-2 gap-4">
                 {selectedProject.gallery.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt={`${selectedProject.title} gallery ${index + 1}`}
-                    className="w-full h-48 object-cover rounded-lg"
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-bold text-gray-900 mb-4">Technologies</h4>
-              <div className="flex flex-wrap gap-2">
-                {selectedProject.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold"
-                  >
-                    {tag}
-                  </span>
+                  <div key={index} className="border-4 border-brutal-black rounded-xl overflow-hidden shadow-brutal-sm">
+                    <img
+                      src={img}
+                      alt={`${selectedProject.title} ${index + 1}`}
+                      className="w-full aspect-video object-cover"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
@@ -127,9 +120,9 @@ const PortfolioGrid: React.FC = () => {
                 href={selectedProject.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="brutal-button-primary inline-block"
               >
-                Visit Project
+                Visit Project →
               </a>
             )}
           </div>

@@ -1,40 +1,36 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, ArrowRight } from 'lucide-react';
 
 const NotFound: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4">
-      <div className="text-center max-w-lg">
-        <div className="mb-8">
-          <h1 className="text-9xl font-bold text-gray-900 leading-none">404</h1>
-        </div>
+    <div className="min-h-screen bg-brutal-bg flex items-center justify-center pt-20">
+      <div className="max-w-lg text-center px-6">
+        <div className="brutal-card-static p-12">
+          {/* Big 404 */}
+          <div className="mb-8">
+            <span className="text-8xl font-black text-brutal-black">4</span>
+            <span className="inline-block w-20 h-20 bg-brutal-pink border-4 border-brutal-black rounded-full mx-2 align-middle"></span>
+            <span className="text-8xl font-black text-brutal-black">4</span>
+          </div>
 
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Page Not Found</h2>
-        <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-          Sorry, the page you're looking for doesn't exist. It might have been moved or deleted.
-        </p>
+          <span className="brutal-tag-pink mb-6 inline-block">
+            ✦ Error
+          </span>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <h1 className="text-3xl lg:text-4xl font-black text-brutal-black mb-4 tracking-tight">
+            Page not found
+          </h1>
+
+          <p className="text-neutral-600 font-medium mb-8 text-lg">
+            The page you're looking for doesn't exist or has been moved.
+          </p>
+
           <Link
             to="/"
-            className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+            className="brutal-button-primary inline-block"
           >
-            <Home size={20} />
-            Go Home
-          </Link>
-          <Link
-            to="/blog"
-            className="inline-flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-blue-600 hover:text-blue-600 transition-all font-semibold"
-          >
-            Read Blog
-            <ArrowRight size={20} />
+            ← Back to Home
           </Link>
         </div>
-
-        <p className="text-gray-600 text-sm mt-8">
-          If you think this is a mistake, please <a href="/contact" className="text-blue-600 hover:text-blue-700 font-semibold">get in touch</a>.
-        </p>
       </div>
     </div>
   );

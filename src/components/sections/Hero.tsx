@@ -1,63 +1,82 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+    <section className="min-h-screen flex items-center pt-32 pb-20 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Content */}
+          <div className="space-y-8 animate-slide-up text-center lg:text-left">
+            {/* Tag */}
+            <div className="inline-block">
+              <span className="brutal-tag">
+                ✦ Digital Studio
+              </span>
+            </div>
+
+            {/* Main Heading */}
             <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Elevate Your Digital Presence
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-brutal-black leading-[1.1] tracking-tight">
+                We craft{' '}
+                <span className="highlight-pink">digital</span>{' '}
+                experiences that{' '}
+                <span className="highlight-blue">matter</span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                CROFT combines strategic web development and social media marketing to help your business reach new heights. We transform ideas into exceptional digital experiences.
+              <p className="text-xl lg:text-2xl text-neutral-600 leading-relaxed max-w-lg mx-auto lg:mx-0 font-medium">
+                Strategic web development and marketing solutions for ambitious businesses ready to grow.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-lg hover:shadow-lg"
+                className="brutal-button-primary"
               >
-                Start Your Project
-                <ArrowRight size={20} />
+                Start a Project →
               </Link>
               <a
-                href="#services"
-                className="inline-flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-blue-600 hover:text-blue-600 transition-all duration-300 font-semibold text-lg"
+                href="#work"
+                className="brutal-button"
               >
-                Explore Services
+                View Work
               </a>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 pt-8">
-              <div>
-                <p className="text-3xl font-bold text-gray-900">50+</p>
-                <p className="text-gray-600 text-sm">Successful Projects</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-gray-900">30</p>
-                <p className="text-gray-600 text-sm">Team Members</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-gray-900">95%</p>
-                <p className="text-gray-600 text-sm">Client Satisfaction</p>
-              </div>
+            {/* Stats Cards */}
+            <div className="flex flex-wrap gap-4 pt-8 justify-center lg:justify-start">
+              {[
+                { label: 'Projects Delivered', value: '50+', color: 'bg-brutal-green' },
+                { label: 'Client Retention', value: '95%', color: 'bg-brutal-pink' },
+                { label: 'Years Experience', value: '5+', color: 'bg-brutal-blue' }
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className="brutal-card-sm p-5 flex-1 min-w-[140px] text-center lg:text-left"
+                  style={{ animationDelay: `${i * 100}ms` }}
+                >
+                  <div className={`inline-block px-3 py-1 ${stat.color} rounded-lg mb-2`}>
+                    <p className="text-3xl font-black text-brutal-black">{stat.value}</p>
+                  </div>
+                  <p className="text-sm font-bold text-neutral-600">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="relative hidden lg:block">
-            <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl overflow-hidden shadow-2xl">
+          {/* Right - Avatar/Illustration Card */}
+          <div className="relative hidden lg:block animate-fade-in">
+            <div className="brutal-card-static overflow-hidden p-3">
               <img
-                src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Team collaboration"
-                className="w-full h-96 object-cover"
+                className="w-full h-[500px] object-cover rounded-[20px]"
               />
+              {/* Floating Tag */}
+              <div className="absolute bottom-8 left-8 bg-brutal-yellow border-3 border-brutal-black rounded-xl px-4 py-3 shadow-brutal-sm">
+                <p className="text-sm font-bold text-brutal-black">📍 Based in India</p>
+              </div>
             </div>
-            <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-blue-400 rounded-full opacity-10 blur-3xl"></div>
           </div>
         </div>
       </div>

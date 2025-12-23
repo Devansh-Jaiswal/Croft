@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { X } from 'lucide-react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -49,32 +48,48 @@ const Modal: React.FC<ModalProps> = ({
   const sizeStyles = {
     sm: 'max-w-sm',
     md: 'max-w-md',
-    lg: 'max-w-2xl'
+    lg: 'max-w-3xl'
   };
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300"
-      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
       role="presentation"
     >
+      {/* Overlay - solid dark, no blur */}
       <div
-        className={`${sizeStyles[size]} max-h-[90vh] w-full mx-4 bg-white rounded-lg shadow-xl overflow-y-auto transition-all duration-300 transform`}
+        className="absolute inset-0 bg-brutal-black/80 transition-opacity duration-300 animate-fade-in"
+        onClick={onClose}
+      />
+
+      {/* Modal Content - Neubrutalist style */}
+      <div
+        className={`${sizeStyles[size]} relative w-full bg-white border-4 border-brutal-black rounded-brutal shadow-brutal-lg overflow-hidden animate-slide-up`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          {title && <h2 className="text-2xl font-bold text-gray-900">{title}</h2>}
+        {/* Header */}
+        <div className="sticky top-0 bg-brutal-yellow border-b-4 border-brutal-black px-6 py-4 flex items-center justify-between z-10">
+          {title && (
+            <h2 className="text-xl font-black text-brutal-black tracking-tight">
+              {title}
+            </h2>
+          )}
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 bg-white border-3 border-brutal-black rounded-full shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all ml-auto"
             aria-label="Close modal"
           >
-            <X size={24} className="text-gray-600" />
+            <div className="w-5 h-5 relative flex items-center justify-center">
+              <span className="block w-4 h-1 bg-brutal-black rotate-45 absolute rounded-full" />
+              <span className="block w-4 h-1 bg-brutal-black -rotate-45 absolute rounded-full" />
+            </div>
           </button>
         </div>
-        <div className="p-6">
+
+        {/* Body */}
+        <div className="p-6 max-h-[80vh] overflow-y-auto bg-white">
           {children}
         </div>
       </div>
