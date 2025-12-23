@@ -25,7 +25,7 @@ export const testimonials: Testimonial[] = [
     company: 'GourmetBites',
     role: 'Founder',
     image: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=600',
-    quote: 'CROFT\'s branding work elevated our company identity. The new design resonates perfectly with our target audience and increased brand recognition by 85%.',
+    quote: `CROFT's branding work elevated our company identity. The new design resonates perfectly with our target audience and increased brand recognition by 85%.`,
     rating: 5
   },
   {
@@ -43,7 +43,7 @@ export const testimonials: Testimonial[] = [
     company: 'WellnessHub',
     role: 'Social Media Lead',
     image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=600&h=600',
-    quote: 'CROFT\'s social media strategy brought our fitness brand to the next level. Their creative content and data-driven approach generated amazing engagement.',
+    quote: `CROFT's social media strategy brought our fitness brand to the next level. Their creative content and data-driven approach generated amazing engagement.`,
     rating: 5
   },
   {

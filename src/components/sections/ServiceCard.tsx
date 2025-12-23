@@ -7,7 +7,8 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
-  const IconComponent = (LucideIcons as any)[service.icon] || LucideIcons.Star;
+  const icons = LucideIcons as unknown as Record<string, React.ComponentType<{ size?: number; className?: string }>>;
+  const IconComponent = icons[service.icon] || LucideIcons.Star;
 
   return (
     <div className="group h-full bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-blue-200">

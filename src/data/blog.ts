@@ -28,7 +28,7 @@ These trends represent an exciting time in web development. Staying updated with
     id: '2',
     title: 'Social Media Marketing Strategies That Actually Work',
     excerpt: 'Data-driven strategies to maximize your social media ROI and build authentic audience connections.',
-    content: `Social media marketing has evolved significantly. It\'s no longer just about posting content—it\'s about building relationships and providing value.
+    content: `Social media marketing has evolved significantly. It's no longer just about posting content—it's about building relationships and providing value.
 
 Authenticity is key. Audiences can detect and dismiss inauthentic content immediately. Share genuine stories about your brand, your team, and your customers.
 
