@@ -20,12 +20,12 @@ const PortfolioGrid: React.FC = () => {
     : portfolioItems.filter(item => item.category === filter);
 
   return (
-    <section id="work" className="py-24 lg:py-32 relative">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <section id="work" className="py-16 sm:py-24 lg:py-32 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 lg:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 mb-8 sm:mb-12 lg:mb-16">
           <div className="max-w-xl">
-            <span className="brutal-tag-blue mb-6 inline-block">
+            <span className="brutal-tag-blue mb-4 sm:mb-6 inline-block text-xs sm:text-sm">
               ✦ Portfolio
             </span>
             <h2 className="section-title">
@@ -35,14 +35,14 @@ const PortfolioGrid: React.FC = () => {
 
           {/* Filter Tabs */}
           <div className="w-full md:w-auto overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-            <div className="flex gap-2 p-2 bg-white border-4 border-brutal-black rounded-brutal shadow-brutal min-w-max">
+            <div className="flex gap-1 sm:gap-2 p-1.5 sm:p-2 bg-white border-3 sm:border-4 border-brutal-black rounded-brutal shadow-brutal-sm sm:shadow-brutal min-w-max">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setFilter(category.id)}
-                  className={`px-5 py-2.5 text-sm font-bold transition-all duration-200 rounded-xl border-2 border-brutal-black whitespace-nowrap ${filter === category.id
-                      ? category.color
-                      : 'bg-white text-brutal-black hover:bg-neutral-100'
+                  className={`px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 rounded-lg sm:rounded-xl border-2 border-brutal-black whitespace-nowrap ${filter === category.id
+                    ? category.color
+                    : 'bg-white text-brutal-black hover:bg-neutral-100'
                     }`}
                   aria-pressed={filter === category.id}
                 >
@@ -54,7 +54,7 @@ const PortfolioGrid: React.FC = () => {
         </div>
 
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {filteredProjects.map((item, index) => (
             <PortfolioCard
               key={item.id}
